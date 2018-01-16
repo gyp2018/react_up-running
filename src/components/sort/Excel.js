@@ -9,12 +9,10 @@ class Excel extends Component {
       data: props.data,
       column: null,
       descending: false,
-      edit: null,
     };
 
     this.sortHandler = this.sortHandler.bind(this);
     this.showEditor = this.showEditor.bind(this);
-    this.save = this.save.bind(this);
   }
 
   sortHandler(e) {
@@ -42,18 +40,6 @@ class Excel extends Component {
     });
   }
 
-  save(e) {
-    e.preventDefault();
-    const input = e.target.firstChild;
-    const data = this.state.data.slice();
-    data[this.state.edit.row][this.state.edit.cell] = input.value;
-
-    this.setState({
-      edit: null,
-      data: data,
-    })
-  }
-
   render() {
     return (
       <div className="table-responsive-xl">
@@ -76,16 +62,7 @@ class Excel extends Component {
                 <tr key={rowIdx}>
                   {
                     row.map((cell, idx) => {
-                      let content = cell;
-                      const edit = this.state.edit;
-                      if (edit && edit.row === rowIdx && edit.cell === idx) {
-                        content = (
-                          <form onSubmit={this.save}>
-                            <input type="text" defaultValue={content} />
-                          </form>
-                        )
-                      }
-                      return <td key={idx} data-row={rowIdx}>{content}</td>;
+                      return <td key={idx}>{cell}</td>;
                     })
                   }
                 </tr>

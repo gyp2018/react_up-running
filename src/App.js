@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Excel from './components/Excel';
+import Excel from './components/sort/Excel';
 import { headers, data } from './data';
 import './App.css';
 
