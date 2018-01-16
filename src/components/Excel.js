@@ -9,10 +9,12 @@ class Excel extends Component {
       data: props.data,
       column: null,
       descending: false,
+      edit: null,
     };
 
     this.sortHandler = this.sortHandler.bind(this);
-
+    this.showEditor = this.showEditor.bind(this);
+    this.save = this.save.bind(this);
   }
 
   sortHandler(e) {
@@ -31,6 +33,27 @@ class Excel extends Component {
     });
   }
 
+  showEditor(e) {
+    this.setState({
+      edit: {
+        row: parseInt(e.target.dataset.row, 10),
+        cell: e.target.cellIndex,
+      }
+    });
+  }
+
+  save(e) {
+    e.preventDefault();
+    const input = e.target.firstChild;
+    const data = this.state.data.slice();
+    data[this.state.edit.row][this.state.edit.cell] = input.value;
+
+    this.setState({
+      edit: null,
+      data: data,
+    })
+  }
+
   render() {
     return (
       <table className="table">
@@ -46,14 +69,24 @@ class Excel extends Component {
           }
           </tr>
         </thead>
-        <tbody>
+        <tbody onDoubleClick={this.showEditor}>
           {
-            this.state.data.map((row, idx) => (
-              <tr key={idx}>
+            this.state.data.map((row, rowIdx) => (
+              <tr key={rowIdx}>
                 {
-                  row.map((cell, idx) => (
-                    <td key={idx}>{cell}</td>
-                  ))
+                  row.map((cell, idx) => {
+                    let content = cell;
+                    const edit = this.state.edit;
+                    if (edit && edit.row === rowIdx && edit.cell === idx) {
+                      content = (
+                        <form onSubmit={this.save}>
+                          <input type="text" defaultValue={content} />
+                        </form>
+                      )
+                    }
+
+                    return <td key={idx} data-row={rowIdx}>{content}</td>;
+                  })
                 }
               </tr>
             ))
