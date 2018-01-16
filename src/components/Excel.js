@@ -6,7 +6,9 @@ class Excel extends Component {
     super(props);
 
     this.state = {
-      data: props.data
+      data: props.data,
+      column: null,
+      descending: false,
     };
 
     this.sortHandler = this.sortHandler.bind(this);
@@ -16,21 +18,31 @@ class Excel extends Component {
   sortHandler(e) {
     const column = e.target.cellIndex;
     const data = Array.from(this.state.data);
-    data.sort((a, b) => (a[column] > b[column] ? 1 : -1));
+    const descending = this.state.column === column && !this.state.descending;
+    data.sort((a, b) => {
+      return descending
+        ? (a[column] > b[column] ? 1 : -1)
+        : (a[column] < b[column] ? 1 : -1);
+    });
     this.setState({
-      data: data,
+      data,
+      column,
+      descending,
     });
   }
 
   render() {
     return (
-      <table>
+      <table className="table">
         <thead onClick={this.sortHandler}>
           <tr>
           {
-            this.props.headers.map((title, idx) => (
-              <th key={idx}>{title}</th>
-            ))
+            this.props.headers.map((title, idx) => {
+              if (this.state.column === idx) {
+                title += this.state.descending ? '\u2191' : '\u2193'
+              }
+              return <th key={idx}>{title}</th>;
+            })
           }
           </tr>
         </thead>

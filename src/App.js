@@ -10,7 +10,8 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <div>
+        <div className="container">
+          <h2>Excel Table</h2>
           <Excel headers={headers} data={data} />
         </div>
       </div>
