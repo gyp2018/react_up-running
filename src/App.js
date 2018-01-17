@@ -4,6 +4,7 @@ import { headers, data } from './data';
 import PlainExcel from './components/plain/Excel';
 import SortExcel from './components/sort/Excel';
 import EditExcel from './components/edit/Excel';
+import FilterExcel from './components/filter/Excel';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <PlainExcel headers={headers} data={data} />
           <SortExcel headers={headers} data={data} />
           <EditExcel headers={headers} data={data} />
+          <FilterExcel headers={headers} data={data} />
         </div>
       </div>
     );
