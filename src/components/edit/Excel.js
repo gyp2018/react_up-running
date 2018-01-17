@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 class Excel extends Component {
-
   constructor(props) {
     super(props);
 
@@ -56,41 +55,36 @@ class Excel extends Component {
 
   render() {
     return (
-      <div className="table-responsive-xl">
+      <div className="table-responsive-xl my-5">
+        <h2>Edit Excel</h2>
         <table className="table">
           <thead onClick={this.sortHandler}>
             <tr>
-            {
-              this.props.headers.map((title, idx) => {
+              {this.props.headers.map((title, idx) => {
                 if (this.state.column === idx) {
                   title += this.state.descending ? '\u2191' : '\u2193'
                 }
                 return <th key={idx}>{title}</th>;
-              })
-            }
+              })}
             </tr>
           </thead>
           <tbody onDoubleClick={this.showEditor}>
-            {
-              this.state.data.map((row, rowIdx) => (
-                <tr key={rowIdx}>
-                  {
-                    row.map((cell, idx) => {
-                      let content = cell;
-                      const edit = this.state.edit;
-                      if (edit && edit.row === rowIdx && edit.cell === idx) {
-                        content = (
-                          <form onSubmit={this.save}>
-                            <input type="text" defaultValue={content} />
-                          </form>
-                        )
-                      }
-                      return <td key={idx} data-row={rowIdx}>{content}</td>;
-                    })
+            {this.state.data.map((row, rowIdx) => (
+              <tr key={rowIdx}>
+                {row.map((cell, idx) => {
+                  let content = cell;
+                  const edit = this.state.edit;
+                  if (edit && edit.row === rowIdx && edit.cell === idx) {
+                    content = (
+                      <form onSubmit={this.save}>
+                        <input type="text" defaultValue={content} />
+                      </form>
+                    )
                   }
-                </tr>
-              ))
-            }
+                  return <td key={idx} data-row={rowIdx}>{content}</td>;
+                })}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

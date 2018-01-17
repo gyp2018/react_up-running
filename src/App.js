@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import Excel from './components/sort/Excel';
-import { headers, data } from './data';
 import './App.css';
+import { headers, data } from './data';
+import PlainExcel from './components/plain/Excel';
+import SortExcel from './components/sort/Excel';
+import EditExcel from './components/edit/Excel';
 
 class App extends Component {
   render() {
@@ -11,8 +13,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <div className="container">
-          <h2>Excel Table</h2>
-          <Excel headers={headers} data={data} />
+          <PlainExcel headers={headers} data={data} />
+          <SortExcel headers={headers} data={data} />
+          <EditExcel headers={headers} data={data} />
         </div>
       </div>
     );
