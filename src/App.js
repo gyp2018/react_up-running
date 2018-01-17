@@ -5,6 +5,8 @@ import PlainExcel from './components/plain/Excel';
 import SortExcel from './components/sort/Excel';
 import EditExcel from './components/edit/Excel';
 import FilterExcel from './components/filter/Excel';
+import ExportExcel from './components/export/Excel';
+
 
 class App extends Component {
   render() {
@@ -18,6 +20,7 @@ class App extends Component {
           <SortExcel headers={headers} data={data} />
           <EditExcel headers={headers} data={data} />
           <FilterExcel headers={headers} data={data} />
+          <ExportExcel headers={headers} data={data} />
         </div>
       </div>
     );
